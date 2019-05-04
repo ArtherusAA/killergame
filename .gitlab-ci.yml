@@ -1,0 +1,26 @@
+image: python:latest
+
+cache:
+  paths:
+    - ~/.cache/pip
+
+before_script:
+  - python -V
+
+stages:
+  - test
+  - style
+
+testing:
+  stage: test
+  script:
+    - python manage.py test
+
+pylint:
+  stage: style
+  script:
+    - pylint -j 0 --load-plugins=pylint_django app
+pep8:
+  stage: style
+  script:
+  - pycodestyle .
